@@ -34,7 +34,7 @@ public class EtiquetaService {
                 .append(entrega.getDestinatario())
                 .append(' ');
         stringBuilder.append("com frete tipo: ")
-                .append(entrega.getFreteTipo().sigla)
+                .append(entrega.getFreteTipo().getSigla())
                 .append(' ');
         stringBuilder.append("no valor de R$")
                 .append(calculadoraFrete.calcular(entrega));

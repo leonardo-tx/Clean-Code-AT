@@ -5,9 +5,13 @@ public enum FreteTipo {
     PADRAO("PAD"),
     ECONOMICO("ECO");
 
-    public final String sigla;
+    private final String sigla;
 
     FreteTipo(String sigla) {
         this.sigla = sigla;
+    }
+
+    public String getSigla() {
+        return sigla;
     }
 }
