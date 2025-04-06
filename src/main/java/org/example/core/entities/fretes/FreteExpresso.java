@@ -1,16 +1,26 @@
 package org.example.core.entities.fretes;
 
 import org.example.core.entities.entregas.Entrega;
-import org.example.core.utils.fretes.PromocaoDeFrete;
+import org.example.core.entities.promocoes.PromocaoFrete;
 
-public final class FreteExpresso implements CalculadoraFrete {
+import java.util.List;
+
+public final class FreteExpresso extends FreteStrategy {
     private static final double TAXA_MULTIPLICATIVA = 1.5;
     private static final double TAXA_ADICIONAL = 10;
 
+    public FreteExpresso(List<PromocaoFrete> promocoes) {
+        super(promocoes);
+    }
+
     @Override
     public double calcular(Entrega entrega) {
-        double pesoEmQuilogramas = PromocaoDeFrete.descontarPesoSeAplicavel(entrega);
-        return pesoEmQuilogramas * TAXA_MULTIPLICATIVA + TAXA_ADICIONAL;
+        validarFreteTipoDaEntrega(entrega);
+
+        double preco = entrega.getPesoEmQuilogramas() * TAXA_MULTIPLICATIVA + TAXA_ADICIONAL;
+        double precoDescontado = aplicarDescontoDisponivel(entrega, preco);
+
+        return Math.max(precoDescontado, 0.0);
     }
 
     @Override

@@ -1,11 +1,21 @@
 package org.example.core.entities.fretes;
 
-public final class CalculadoraFreteFactory {
-    public static CalculadoraFrete criar(FreteTipo freteTipo) {
+import org.example.core.entities.promocoes.PromocaoFrete;
+
+import java.util.List;
+
+public class CalculadoraFreteFactory {
+    private final List<PromocaoFrete> promocoes;
+
+    public CalculadoraFreteFactory(List<PromocaoFrete> promocoes) {
+        this.promocoes = promocoes;
+    }
+
+    public CalculadoraFrete criar(FreteTipo freteTipo) {
         return switch (freteTipo) {
-            case EXPRESSO -> new FreteExpresso();
-            case PADRAO -> new FretePadrao();
-            case ECONOMICO -> new FreteEconomico();
+            case EXPRESSO -> new FreteExpresso(promocoes);
+            case PADRAO -> new FretePadrao(promocoes);
+            case ECONOMICO -> new FreteEconomico(promocoes);
         };
     }
 }
